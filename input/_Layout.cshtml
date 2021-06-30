@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="assets/site.css">
+    <link rel="script" href="https://cdn.jsdelivr.net/npm/@@fortawesome/fontawesome-free@5.15.3/js/fontawesome.min.js">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+</head>
+
+<body>
+    <section class="section has-background-light">
+        <div class="container">
+            <p class="title is-2 has-text-centered">Alex Bance</p>
+            <p class="subtitle has-text-centered">Power Platform and .NET Technical Consultant</p>
+        </div>
+    </section>
+    <div class="section">
+        @RenderBody()
+    </div>
+    <footer id="footer" class="footer has-background-light">
+        <div class="content has-text-centered">
+            <p>
+                Built using Statiq.Web & Bulmia by <strong>Alex Bance</strong>.
+            </p>
+            <div class="buttons is-centered">
+                <a class="button" href="https://github.com/bancey">
+                    <span class="icon">
+                        <i class="fab fa-github"></i>
+                    </span>
+                    <span>GitHub</span>
+                </a>
+                <a class="button" href="https://linkedin.com/in/alex-bance">
+                    <span class="icon">
+                        <i class="fab fa-linkedin"></i>
+                    </span>
+                    <span>LinkedIn</span>
+                </a>
+                <a class="button" href="mailto:abance@bancey.xyz">
+                    <span class="icon">
+                        <i class="fas fa-envelope"></i>
+                    </span>
+                    <span>Email</span>
+                </a>
+            </div>
+        </div>
+    </footer>
+</body>
