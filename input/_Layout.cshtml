@@ -2,6 +2,9 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@Document.GetString("PageTitle")</title>
+    <link rel="canonical" href="@(Document.GetString("Canonical") ?? Document.GetLink(true))">
+    <meta property="og:title" content="@Document.GetString("PageTitle")" />
     <link rel="stylesheet" href="assets/site.css">
     <link rel="script" href="https://cdn.jsdelivr.net/npm/@@fortawesome/fontawesome-free@5.15.3/js/fontawesome.min.js">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
@@ -21,7 +24,7 @@
     <footer id="footer" class="footer has-background-light">
         <div class="content has-text-centered">
             <p>
-                Built using Statiq.Web & Bulmia by <strong>Alex Bance</strong>.
+                @Document.GetString(WebKeys.Copyright) - Built using <a href="https://statiq.dev/web">Statiq.Web</a> & <a href="https://bulma.io/">Bulmia</a> by <strong>Alex Bance</strong>.
             </p>
             <div class="buttons is-centered">
                 <a class="button" href="https://github.com/bancey">
