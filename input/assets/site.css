@@ -1,13 +1,9 @@
 body {
-    margin-bottom:50px;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
 }
 
-#footer {
-    position: fixed;
-    height: 50px;
-    background-color: red;
-    bottom: 0px;
-    left: 0px;
-    right: 0px;
-    margin-bottom: 0px;
+#wrapper {
+    flex: 1;
 }

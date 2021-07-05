@@ -1,25 +1,24 @@
 ---
 Title: Home
+Order: 0
+ArchiveSources: => GetString("PostSources")
+ArchiveFilter: => GetBool("IsPost")
+ArchiveDestination: >
+  => GetInt("Index") <= 1 ? $"index.html" : $"page/{GetInt("Index")}.html"
+ArchivePageSize: 3
+ArchiveOrderKey: Published
+ArchiveOrderDescending: true
+ArchiveTitle: => GetString("Title")
 ---
 <div class="tile is-ancestor">
-    <div class="tile is-9 is-vertical is-parent">
-        <div class="tile is-child box">
-            <p class="title">One</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor
-                vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.</p>
-        </div>
-        <div class="tile is-child box">
-            <p class="title">Two</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor
-                vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.</p>
-        </div>
-    </div>
-    <div class="tile card">
+    @Html.Partial("/_posts.cshtml", Document)
+    <div class="tile is-vertical is-parent">
+        <div class="tile is-child card">
         <div class="card-content">
             <div class="media">
                 <div class="media-left">
                     <figure class="image is-64x64">
-                        <img src="assets/me.jpeg" alt="Alex Bance">
+                        <img src="assets/images/me.jpeg" alt="Alex Bance">
                     </figure>
                 </div>
                 <div class="media-content">
@@ -38,5 +37,28 @@ Title: Home
                 </p>
             </div>
         </div>
+    </div>
+    @{
+        IDocument[] tags = Outputs.Get("tags.html")?.GetChildren().OrderByDescending(x => x.GetChildren().Count()).Take(10).ToArray() ?? Array.Empty<IDocument>();
+        if (tags.Length > 0)
+        {
+            <div class="tile is-child card">
+                <div class="card-content">
+                    <div class="media">
+                        <div class="media-content">
+                            <p class="title is-4">Tags</p>
+                        </div>
+                    </div>                    
+                    <div class="content">
+                        @foreach (IDocument tag in Outputs.Get("tags.html").GetChildren().OrderByDescending(x => x.GetChildren().Count()).Take(10))
+                        {
+                            string postCount = tag.GetChildren().Count().ToString();
+                            <a href="@Context.GetLink(tag)" class="badge badge-light"> @tag.GetTitle() (@postCount)</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    }
     </div>
 </div>
