@@ -34,12 +34,24 @@
                 </a>
             </div>
             <div class="navbar-end">
-                <div class="navbar-item">
-                    <div class="buttons">
-                        <a class="button is-dark">Github</a>
-                        <a class="button is-link">Download</a>
-                    </div>
-                </div>
+                <a class="navbar-item" href="https://github.com/bancey">
+                    <span class="icon">
+                        <i class="fab fa-github"></i>
+                    </span>
+                    <span>GitHub</span>
+                </a>
+                <a class="navbar-item" href="https://linkedin.com/in/alex-bance">
+                    <span class="icon">
+                        <i class="fab fa-linkedin"></i>
+                    </span>
+                    <span>LinkedIn</span>
+                </a>
+                <a class="navbar-item" href="mailto:abance@bancey.xyz">
+                    <span class="icon">
+                        <i class="fas fa-envelope"></i>
+                    </span>
+                    <span>Email</span>
+                </a>
             </div>
         </div>
     </nav>
@@ -64,28 +76,17 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-
-        // Get all "navbar-burger" elements
         const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
-
-        // Check if there are any navbar burgers
         if ($navbarBurgers.length > 0) {
-
-            // Add a click event on each of them
             $navbarBurgers.forEach(el => {
                 el.addEventListener('click', () => {
-
-                    // Get the target from the "data-target" attribute
                     const target = el.dataset.target;
                     const $target = document.getElementById(target);
 
-                    // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
                     el.classList.toggle('is-active');
                     $target.classList.toggle('is-active');
-
                 });
             });
         }
-
     });
 </script>

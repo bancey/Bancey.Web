@@ -1,0 +1,37 @@
+
+ArchiveSources: => GetString("PostSources")
+ArchiveFilter: => GetBool("IsPost")
+ArchiveOrderKey: Published
+ArchiveOrderDescending: true
+---
+@foreach(IGrouping<int, IDocument> group in Document
+    .GetChildren()
+    .GroupBy(x => x.GetDateTime(WebKeys.Published).Year)
+    .OrderByDescending(x => x.Key))
+{
+    <section class="hero is-small has-background-light">
+        <div class="hero-body">
+          <p class="title">
+            @group.Key
+          </p>
+        </div>
+    </section>
+    <div class="tile is-ancestor">
+        <div class="tile is-vertical is-parent">
+            @foreach (IDocument post in group)
+            {
+                string subtitle = post.ContainsKey("Lead") ? $"{post.GetDateTime(WebKeys.Published).ToLongDateString()} - {post.GetString("Lead")}" : post.GetDateTime(WebKeys.Published).ToLongDateString();
+                <div class="tile is-child card">
+                    <div class="card-content">
+                        <div class="media">
+                            <div class="media-content">
+                                <p class="title is-4">@Html.DocumentLink(post)</p>
+                                <p class="subtitle is-6">@subtitle</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>    
+}
