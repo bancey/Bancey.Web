@@ -18,11 +18,8 @@
         },
         {
             "label": "build:preview",
-            "command": "dotnet",
+            "command": "dotnet run -- preview",
             "type": "shell",
-            "args": [
-                "run -- preview"
-            ],
             "group": "build",
             "presentation": {
                 "reveal": "silent"
