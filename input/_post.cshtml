@@ -1,29 +1,12 @@
 @model IDocument
 
 @{
-    string excerpt = Model.GetString(Statiq.Html.HtmlKeys.Excerpt);
     DateTime published = Model.GetDateTime(WebKeys.Published);
+    string subtitle = Model.ContainsKey("Lead") ? $"{published.ToLongDateString()} - {Model.GetString("Lead")}" : published.ToLongDateString();
 }
 
-<div class="tile is-child card">
-    <div class="card-content">
-        <div class="media">
-            <div class="media-content">
-                <p class="title is-4">@Html.DocumentLink(Model)</p>
-                @if (Model.ContainsKey("Lead"))
-                {
-                    <p class="subtitle is-6">@Model.GetString("Lead")</p>
-                }
-            </div>
-        </div>
-        <div class="content">
-            @if (!string.IsNullOrEmpty(excerpt))
-            {
-                @Html.Raw(excerpt)
-                <a href="@Context.GetLink(Model)">Read more...</a>
-            }
-            <br>
-            <time datetime="@published">@published.ToLongDateString()</time>
-        </div>
-    </div>
-</div>
+<section class="section">
+    <p class="title is-4">@Html.DocumentLink(Model)</p>
+    <p class="subtitle is-6">@subtitle</p>
+    <hr />
+</section>

@@ -11,58 +11,59 @@ ArchiveOrderDescending: true
 ArchiveTitle: => GetString("Title")
 ---
 <div class="tile is-ancestor">
-    <div class="tile is-9 is-vertical is-parent is-hidden-mobile">
-        @Html.Partial("/_posts.cshtml", Document)
-    </div>
     <div class="tile is-vertical is-parent">
         <div class="tile is-child card">
-        <div class="card-content">
-            <div class="media">
-                <div class="media-left">
-                    <figure class="image is-64x64">
-                        <img src="assets/images/me.jpeg" alt="Alex Bance">
-                    </figure>
+            <div class="card-content">
+                <div class="media">
+                    <div class="media-left">
+                        <figure class="image is-64x64">
+                            <img src="assets/images/me.jpeg" alt="Alex Bance">
+                        </figure>
+                    </div>
+                    <div class="media-content">
+                        <p class="title is-4">Alex Bance</p>
+                    </div>
                 </div>
-                <div class="media-content">
-                    <p class="title is-4">Alex Bance</p>
+                <div class="content">
+                    <p>Alex is a full stack .NET developer and technical consultant for Microsoft's Power Platform.
+                    </p>
+                    <p>Alex has considerable experiance working with the following technologies:
+                    <ul>
+                        <li>Power Platform</li>
+                        <li>Azure DevOps</li>
+                        <li>.NET Development</li>
+                        <li>Azure Native Application Development</li>
+                    </ul>
+                    </p>
                 </div>
-            </div>
-            <div class="content">
-                <p>Alex is a full stack .NET developer and technical consultant for Microsoft's Power Platform.</p>
-                <p>Alex has considerable experiance working with the following technologies:
-                <ul>
-                    <li>Power Platform</li>
-                    <li>Azure DevOps</li>
-                    <li>.NET Development</li>
-                    <li>Azure Native Application Development</li>
-                </ul>
-                </p>
             </div>
         </div>
-    </div>
-    @{
-        IDocument[] tags = Outputs.Get("tags.html")?.GetChildren().OrderByDescending(x => x.GetChildren().Count()).Take(10).ToArray() ?? Array.Empty<IDocument>();
-        if (tags.Length > 0)
-        {
-            <div class="tile is-child card">
-                <div class="card-content">
-                    <div class="media">
-                        <div class="media-content">
-                            <p class="title is-4">Tags</p>
+        @{
+            IDocument[] tags = Outputs.Get("tags.html")?.GetChildren().OrderByDescending(x => x.GetChildren().Count()).Take(10).ToArray() ?? Array.Empty<IDocument>();
+            if (tags.Length > 0)
+            {
+                <div class="tile is-child card">
+                    <div class="card-content">
+                        <div class="media">
+                            <div class="media-content">
+                                <p class="title is-4">Tags</p>
+                            </div>
                         </div>
-                    </div>                    
-                    <div class="content">
-                        <div class="buttons">
-                            @foreach (IDocument tag in Outputs.Get("tags.html").GetChildren().OrderByDescending(x => x.GetChildren().Count()).Take(10))
-                            {
-                                string postCount = tag.GetChildren().Count().ToString();
-                                <a class="button" href="@Context.GetLink(tag)">@tag.GetTitle() (@postCount)</a>
-                            }
+                        <div class="content">
+                            <div class="buttons is-centered">
+                                @foreach (IDocument tag in Outputs.Get("tags.html").GetChildren().OrderByDescending(x => x.GetChildren().Count()).Take(10))
+                                {
+                                    string postCount = tag.GetChildren().Count().ToString();
+                                    <a class="button" href="@Context.GetLink(tag)">@tag.GetTitle() (@postCount)</a>
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            }
         }
-    }
+    </div>
+    <div class="tile is-vertical is-8 is-parent is-hidden-mobile">
+        @Html.Partial("/_posts.cshtml", Document)
     </div>
 </div>

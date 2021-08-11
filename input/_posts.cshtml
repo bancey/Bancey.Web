@@ -1,18 +1,20 @@
 @model IDocument
 
-@foreach (IDocument post in Model.GetChildren())
-{
-    @Html.Partial("/_post.cshtml", post)
-}
-@{
-    IDocument newer = Model.GetDocument(Keys.Previous);
-    IDocument older = Model.GetDocument(Keys.Next);
-}
-<div class="buttons is-centered">
-    @if (newer != null) {
-        <a class="button is-light" href="@Context.GetLink(newer)">Show Newer Posts</a>
-    }
-    @if (older != null) {
-        <a class="button is-light" href="@Context.GetLink(older)">Show Older Posts</a>
-    }
+<div class="tile is-child card">
+    <div class="card-content">
+        <div class="media">
+            <div class="media-content">
+                <p class="title is-4">Recent Posts</p>
+            </div>
+        </div>
+        <div class="content">
+            @foreach (IDocument post in Model.GetChildren())
+            {
+                @Html.Partial("/_post.cshtml", post)
+            }
+            <div class="buttons is-centered">
+                <a class="button is-light" href="/posts">View All Posts</a>
+            </div>
+        </div>
+    </div>
 </div>
