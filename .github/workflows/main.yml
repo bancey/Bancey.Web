@@ -1,0 +1,19 @@
+name: Deploy Site
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@master
+      with:
+        submodules: recursive
+    - uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '5.0.301'
+    - run: dotnet run -- deploy
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
