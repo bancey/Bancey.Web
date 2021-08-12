@@ -1,0 +1,222 @@
+﻿<!DOCTYPE html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Alex Bance - Azure DevOps: Replacing Releases with a Multi-Stage pipeline</title>
+    <link rel="canonical" href="/posts/replacing-releases-with-multistage-pipelines">
+    <meta property="og:title" content="Alex Bance - Azure DevOps: Replacing Releases with a Multi-Stage pipeline" />
+    <link rel="stylesheet" href="/posts/replacing-releases-with-multistage-pipelines.html?assets/site.css">
+    <link rel="script" href="/posts/replacing-releases-with-multistage-pipelines.html?assets/site.js">
+    <link rel="script" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/js/fontawesome.min.js">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+</head>
+
+<body>
+    <nav class="navbar">
+    <div class="navbar-brand">
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navMenu">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+    </div>
+    <div id="navMenu" class="navbar-menu">
+        <div class="navbar-start">
+            <a class="navbar-item" href="/">
+                Home
+            </a>
+            <a class="navbar-item" href="/posts">
+                Posts
+            </a>
+            <a class="navbar-item" href="/tags">
+                Tags
+            </a>
+        </div>
+        <div class="navbar-end">
+            <a class="navbar-item" href="https://github.com/bancey">
+                <span class="icon">
+                    <i class="fab fa-github"></i>
+                </span>
+                <span>GitHub</span>
+            </a>
+            <a class="navbar-item" href="https://linkedin.com/in/alex-bance">
+                <span class="icon">
+                    <i class="fab fa-linkedin"></i>
+                </span>
+                <span>LinkedIn</span>
+            </a>
+            <a class="navbar-item" href="mailto:abance@bancey.xyz">
+                <span class="icon">
+                    <i class="fas fa-envelope"></i>
+                </span>
+                <span>Email</span>
+            </a>
+        </div>
+    </div>
+</nav>
+        <section class="hero is-link is-small has-background-light">
+        <div class="hero-body">
+            <p class="title has-text-black-bis has-text-centered">Azure DevOps: Replacing Releases with a Multi-Stage pipeline</p>
+            <p class="subtitle has-text-black-bis has-text-centered">Example of how to replace your existing Azure DevOps releases with Multistage pipelines</p>
+                <p class="subtitle has-text-black-bis has-text-centered">Published On: 08 February 2020</p>
+        </div>
+    </section>
+
+    <div class="section">
+        <div class="content">
+    <p>Recently I've discovered that most of my release definitions can be converted into a Multi-Stage pipeline, including having the ability to gate deployments. This provides the added benefit of having my deployment defined in the same yaml file as my build. Given that Microsoft now refer to "Release" definitions as "Classic", this suggests to me that they aren't going to get much love in the future.</p>
+    <br>
+    <p>My pipline yaml initally looked like this. In this examle the code being build & deployed is a very simple react.js site.
+    <pre><code>trigger:
+- master
+pool:
+  vmImage: 'ubuntu-latest'
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '11.x'
+  displayName: 'Install Node.js'
+- script: npm install
+  displayName: 'Restore dependancies'
+- script: npm run build:prod
+  displayName: 'Build site'
+- task: CopyFiles@2
+  displayName: 'Copy scripts to $(Build.ArtifactStagingDirectory)'
+  inputs:
+    SourceFolder: scripts
+    Contents: '*.sh'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/scripts'
+- task: PublishPipelineArtifact@1
+  displayName: Publish Built Site
+  inputs:
+    targetPath: 'public/'
+    artifact: 'site'
+- task: PublishPipelineArtifact@1
+  displayName: Publish Scripts
+  inputs:
+    targetPath: 'scripts/'
+    artifact: 'scripts'
+</code></pre>
+
+    This restores any dependancies, builds the site and publishes it as an artifact along with some scripts used to deploy the site.</p>
+    <br>
+    <p>The release pipeline that then deployed the built site was very simple, it only ran a powershell script.</p>
+
+    <img alt="Image of the Release Definition" src="/assets/images/replacing-releases-with-azure-devops-multistage-pipelines/release.png" />
+
+    <p>The first step is to refactor the existing build definition to be part of a stage, rather than a standalone build. To do this I wrapped the existing pool and steps in a new stage. Leaving the actual steps the same.
+    <pre><code>stages:
+- stage: 'Build'
+  jobs:
+  - job:
+    pool:
+      vmImage: 'ubuntu-latest'
+    workspace:
+      clean: 'all'
+    steps:
+    - task: NodeTool@0
+      inputs:
+        versionSpec: '11.x'
+      displayName: 'Install Node.js'
+    - script: npm install
+      displayName: 'Restore dependancies'
+    - script: npm run build:prod
+      displayName: 'Build site'
+    - task: CopyFiles@2
+      displayName: 'Copy scripts to $(Build.ArtifactStagingDirectory)'
+      inputs:
+        SourceFolder: scripts
+        Contents: '*.sh'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)/scripts'
+    - task: PublishPipelineArtifact@1
+      displayName: Publish Built Site
+      inputs:
+        targetPath: 'public/'
+        artifact: 'site'
+    - task: PublishPipelineArtifact@1
+      displayName: Publish Scripts
+      inputs:
+        targetPath: 'scripts/'
+        artifact: 'scripts'
+</code></pre>
+
+    Once I had given this a test, I moved on to including the powershell task as part of a deployment stage. First off I created a new environment in Azure DevOps, and created a new approval requirement.</p>
+
+    <img alt="Image of the Environment with the approval requirement" src="/assets/images/replacing-releases-with-azure-devops-multistage-pipelines/approvals-and-checks.png" />
+
+    <p>Once this was done, I added another stage to the yaml. Specifying that the previous stage must have succeeded and linking the job to the environment that I created earlier. Finally I copied the yaml of the PowerShell script task into the new stage.
+    <pre><code>- stage: 'DeployToGitHubPages'
+  displayName: 'Deploy to GitHub Pages'
+  dependsOn: 'Build'
+  condition: 'succeeded()'
+  variables:
+  - group: 'GitHub Pages Deployment Variables'
+  jobs:
+  - deployment:
+    pool:
+      vmImage: 'ubuntu-latest'
+    environment: 'Blog Github Pages'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+            - task: PowerShell@2
+              displayName: 'Run Publish Script'
+              inputs:
+                filePath: '$(Pipeline.Workspace)/scripts/PublishBlog.ps1'
+                arguments: '-gitToken $(Git.Token)'
+</code></pre>
+
+    This results in one pipeline, one simplified view & no loss of functionality.</p>
+
+    <img alt="End Result" src="/assets/images/replacing-releases-with-azure-devops-multistage-pipelines/end-result.png" />
+
+    <p>
+        I hope this was informative, any questions please feel free to reach out.
+    </p>
+</div>
+
+    </div>
+    <footer id="wrapper" class="footer has-background-light">
+    <div class="content has-text-centered">
+        <p>
+            Copyright &#xA9; 2021 Alex Bance - Built using <a
+                href="https://statiq.dev/web">Statiq.Web</a> & <a href="https://bulma.io/">Bulmia</a>.
+            <br>
+            The views and opinions expressed on this site are soley my own and do not represent those of any entity that
+            I am, have been or might be affiliated with.
+                <br>
+                    <span class="icon-text">
+                        <span class="icon">
+                            <i class="fas fa-rss-square"></i>
+                        </span>
+                        <a href="/feed.rss">RSS Feed</a>
+                    </span>
+                    <span class="icon-text">
+                        <span class="icon">
+                            <i class="fas fa-rss-square"></i>
+                        </span>
+                        <a href="/feed.atom">Atom Feed</a>
+                    </span>
+        </p>
+    </div>
+</footer>
+</body>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+        if ($navbarBurgers.length > 0) {
+            $navbarBurgers.forEach(el => {
+                el.addEventListener('click', () => {
+                    const target = el.dataset.target;
+                    const $target = document.getElementById(target);
+
+                    el.classList.toggle('is-active');
+                    $target.classList.toggle('is-active');
+                });
+            });
+        }
+    });
+</script>

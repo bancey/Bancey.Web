@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Alex Bance - Tags</title>
+    <link rel="canonical" href="/tags">
+    <meta property="og:title" content="Alex Bance - Tags" />
+    <link rel="stylesheet" href="/tags.html?assets/site.css">
+    <link rel="script" href="/tags.html?assets/site.js">
+    <link rel="script" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/js/fontawesome.min.js">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+</head>
+
+<body>
+    <nav class="navbar">
+    <div class="navbar-brand">
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navMenu">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+    </div>
+    <div id="navMenu" class="navbar-menu">
+        <div class="navbar-start">
+            <a class="navbar-item" href="/">
+                Home
+            </a>
+            <a class="navbar-item" href="/posts">
+                Posts
+            </a>
+            <a class="navbar-item" href="/tags">
+                Tags
+            </a>
+        </div>
+        <div class="navbar-end">
+            <a class="navbar-item" href="https://github.com/bancey">
+                <span class="icon">
+                    <i class="fab fa-github"></i>
+                </span>
+                <span>GitHub</span>
+            </a>
+            <a class="navbar-item" href="https://linkedin.com/in/alex-bance">
+                <span class="icon">
+                    <i class="fab fa-linkedin"></i>
+                </span>
+                <span>LinkedIn</span>
+            </a>
+            <a class="navbar-item" href="mailto:abance@bancey.xyz">
+                <span class="icon">
+                    <i class="fas fa-envelope"></i>
+                </span>
+                <span>Email</span>
+            </a>
+        </div>
+    </div>
+</nav>
+        <section class="hero is-link is-small has-background-light">
+        <div class="hero-body">
+            <p class="title has-text-black-bis has-text-centered">Alex Bance</p>
+            <p class="subtitle has-text-black-bis has-text-centered">Power Platform and .NET Technical Consultant</p>
+        </div>
+    </section>
+
+    <div class="section">
+            <div class="buttons is-centered">
+            <a class="button" href="/tags/azure-devops">Azure DevOps (1)</a>
+            <a class="button" href="/tags/pipelines">Pipelines (1)</a>
+    </div>
+
+    </div>
+    <footer id="wrapper" class="footer has-background-light">
+    <div class="content has-text-centered">
+        <p>
+            Copyright &#xA9; 2021 Alex Bance - Built using <a
+                href="https://statiq.dev/web">Statiq.Web</a> & <a href="https://bulma.io/">Bulmia</a>.
+            <br>
+            The views and opinions expressed on this site are soley my own and do not represent those of any entity that
+            I am, have been or might be affiliated with.
+                <br>
+                    <span class="icon-text">
+                        <span class="icon">
+                            <i class="fas fa-rss-square"></i>
+                        </span>
+                        <a href="/feed.rss">RSS Feed</a>
+                    </span>
+                    <span class="icon-text">
+                        <span class="icon">
+                            <i class="fas fa-rss-square"></i>
+                        </span>
+                        <a href="/feed.atom">Atom Feed</a>
+                    </span>
+        </p>
+    </div>
+</footer>
+</body>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+        if ($navbarBurgers.length > 0) {
+            $navbarBurgers.forEach(el => {
+                el.addEventListener('click', () => {
+                    const target = el.dataset.target;
+                    const $target = document.getElementById(target);
+
+                    el.classList.toggle('is-active');
+                    $target.classList.toggle('is-active');
+                });
+            });
+        }
+    });
+</script>
