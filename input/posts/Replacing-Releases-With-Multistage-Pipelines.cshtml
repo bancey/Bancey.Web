@@ -10,13 +10,10 @@ Tags:
     <br>
     <p>My pipline yaml initally looked like this. In this examle the code being build & deployed is a very simple react.js site.
     <?# Markdown ?>
-    ```yaml
     trigger:
     - master
-    
     pool:
       vmImage: 'ubuntu-latest'
-    
     steps:
     - task: NodeTool@0
       inputs:
@@ -42,17 +39,15 @@ Tags:
       inputs:
         targetPath: 'scripts/'
         artifact: 'scripts'
-    ```
     <?#/ Markdown ?>
     This restores any dependancies, builds the site and publishes it as an artifact along with some scripts used to deploy the site.</p>
     <br>
     <p>The release pipeline that then deployed the built site was very simple, it only ran a powershell script.</p>
-    
+
     <img alt="Image of the Release Definition" src="/assets/images/replacing-releases-with-azure-devops-multistage-pipelines/release.png" />
-    
+
     <p>The first step is to refactor the existing build definition to be part of a stage, rather than a standalone build. To do this I wrapped the existing pool and steps in a new stage. Leaving the actual steps the same.
     <?# Markdown ?>
-    ```yaml
     stages:
     - stage: 'Build'
       jobs:
@@ -86,15 +81,13 @@ Tags:
           inputs:
             targetPath: 'scripts/'
             artifact: 'scripts'
-    ```
     <?#/ Markdown ?>
     Once I had given this a test, I moved on to including the powershell task as part of a deployment stage. First off I created a new environment in Azure DevOps, and created a new approval requirement.</p>
-    
+
     <img alt="Image of the Environment with the approval requirement" src="/assets/images/replacing-releases-with-azure-devops-multistage-pipelines/approvals-and-checks.png" />
-    
+
     <p>Once this was done, I added another stage to the yaml. Specifying that the previous stage must have succeeded and linking the job to the environment that I created earlier. Finally I copied the yaml of the PowerShell script task into the new stage.
     <?# Markdown ?>
-    ```yaml
     - stage: 'DeployToGitHubPages'
       displayName: 'Deploy to GitHub Pages'
       dependsOn: 'Build'
@@ -115,15 +108,12 @@ Tags:
                   inputs:
                     filePath: '$(Pipeline.Workspace)/scripts/PublishBlog.ps1'
                     arguments: '-gitToken $(Git.Token)'
-    ```
     <?#/ Markdown ?>
     This results in one pipeline, one simplified view & no loss of functionality.</p>
-    
+
     <img alt="End Result" src="/assets/images/replacing-releases-with-azure-devops-multistage-pipelines/end-result.png" />
-    
-    <p>I hope this was informative, any questions please feel free to reach out.
-    <br>
-    Cheers,
-    Alex
+
+    <p>
+        I hope this was informative, any questions please feel free to reach out.
     </p>
 </div>
