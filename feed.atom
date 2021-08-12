@@ -4,12 +4,12 @@
 	<title />
 	<link rel="self" href="/" />
 	<rights>Copyright © 2021</rights>
-	<updated>2021-08-12T15:09:53Z</updated>
+	<updated>2021-08-12T15:47:53Z</updated>
 	<entry>
 		<id>/posts/replacing-releases-with-multistage-pipelines</id>
 		<title>Azure DevOps: Replacing Releases with a Multi-Stage pipeline</title>
 		<link href="/posts/replacing-releases-with-multistage-pipelines" />
-		<updated>2020-02-08T00:00:00Z</updated>
+		<updated>2020-08-02T00:00:00Z</updated>
 		<content>&lt;div class="content"&gt;
     &lt;p&gt;Recently I've discovered that most of my release definitions can be converted into a Multi-Stage pipeline, including having the ability to gate deployments. This provides the added benefit of having my deployment defined in the same yaml file as my build. Given that Microsoft now refer to "Release" definitions as "Classic", this suggests to me that they aren't going to get much love in the future.&lt;/p&gt;
     &lt;br&gt;
