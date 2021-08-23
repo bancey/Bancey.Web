@@ -13,3 +13,4 @@ Layout: /_layout.cshtml
 GitHubOwner: bancey
 GitHubName: Bancey.Web
 GitHubToken: => Config.FromSetting<string>("GITHUB_TOKEN")
+MixPanelProjectId: 6ac0dc5e32a584d603c9a5efa7c6d477
