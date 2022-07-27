@@ -1,0 +1,14 @@
+@{
+ IDocument[] certs = Outputs.FromPipeline("Data").FilterSources("certs/*").ToArray();   
+}
+
+@foreach(var cert in certs)
+{
+    <section class="hero is-small has-background-light">
+        <div class="hero-body">
+          <p class="title">
+            @cert.Get("name")
+          </p>
+        </div>
+    </section>  
+}
