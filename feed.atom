@@ -3,8 +3,8 @@
 	<id>/</id>
 	<title />
 	<link rel="self" href="/" />
-	<rights>Copyright © 2021</rights>
-	<updated>2021-08-23T16:37:07Z</updated>
+	<rights>Copyright © 2022</rights>
+	<updated>2022-07-27T12:42:20Z</updated>
 	<entry>
 		<id>/posts/replacing-releases-with-multistage-pipelines</id>
 		<title>Azure DevOps: Replacing Releases with a Multi-Stage pipeline</title>
