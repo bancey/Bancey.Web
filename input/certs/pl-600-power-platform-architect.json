@@ -1,5 +1,8 @@
 {
     "name": "Microsoft Certified: Power Platform Solution Architect Expert",
-    "moduleCode": "AZ-600",
-    "image": "/assets/images/certs/pl-600.png"
+    "moduleCode": "PL-600",
+    "image": "/assets/images/certs/power-platform-solutions-architect.png",
+    "credlyUrl": "https://www.credly.com/badges/2359e353-c71d-48ac-9a94-a00ca5920ad7",
+    "issueDate": "04/04/2022",
+    "expiryDate": "04/04/2023"
 }
