@@ -1,0 +1,44 @@
+---
+Title: Certifications
+---
+@{
+  IEnumerable<IDocument> certs = Outputs.FromPipeline("Data").FilterSources("certs/*").ToList();
+  List<IEnumerable<IDocument>> certChunks = new List<IEnumerable<IDocument>>();
+  for (int index = 0; index < certs.Count(); index += 2)
+  {
+    certChunks.Add(certs.Skip(index).Take(2));
+  }
+}
+
+<div class="tile is-ancestor">
+  @foreach (var certChunk in certChunks)
+  {
+    <div class="tile is-vertical is-parent">
+      @foreach (var cert in certChunk)
+      {
+        var imgSource = cert.Get("image");
+        var name = cert.Get("name");
+        var credlyUrl = cert.Get("credlyUrl");
+        <div class="tile is-child card">
+          <div class="card-image">
+            <figure class="image is-square">
+              <img src="@imgSource" alt="@name">
+            </figure>
+          </div>
+          <div class="card-content">
+            <div class="content">
+              <p class="title">
+                @name
+              </p>
+              <p>Issued On: @cert.Get("issueDate")</p>
+              <p>Expires On: @cert.Get("expiryDate")</p>
+            </div>
+            <footer class="card-footer">
+              <a href="@credlyUrl" class="card-footer-item">Verify</a>
+            </footer>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>
