@@ -8,7 +8,6 @@ namespace Bancey.Web
     {
         public int Compare(IDocument x, IDocument y)
         {
-            Console.WriteLine($"x: {x.Get("name")} y: {y.Get("name")}");
             var xOrder = (int)x.Get("order");
             var yOrder = (int)y.Get("order");
             return xOrder.CompareTo(yOrder);
