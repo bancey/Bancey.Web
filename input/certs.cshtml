@@ -18,7 +18,6 @@ Title: Certifications
     <div class="tile is-vertical is-parent">
       @foreach (var cert in certChunk)
       {
-        var order = cert.Get("order");
         var imgSource = cert.Get("image");
         var name = cert.Get("name");
         var credlyUrl = cert.Get("credlyUrl");
@@ -35,7 +34,6 @@ Title: Certifications
               </p>
               <p>Issued On: @cert.Get("issueDate")</p>
               <p>Expires On: @cert.Get("expiryDate")</p>
-              <p>@order.GetType()</p>
             </div>
             <footer class="card-footer">
               <a href="@credlyUrl" class="card-footer-item">Verify</a>
