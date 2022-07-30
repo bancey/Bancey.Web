@@ -2,7 +2,9 @@
 Title: Certifications
 ---
 @{
-  IEnumerable<IDocument> certs = Outputs.FromPipeline("Data").FilterSources("certs/*").ToList();
+  DocumentComparer comparer = new DocumentComparer();
+  List<IDocument> certs = Outputs.FromPipeline("Data").FilterSources("certs/*").ToList();
+  certs.Sort(comparer);
   List<IEnumerable<IDocument>> certChunks = new List<IEnumerable<IDocument>>();
   for (int index = 0; index < certs.Count(); index += 2)
   {
