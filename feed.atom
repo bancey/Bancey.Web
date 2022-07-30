@@ -4,7 +4,7 @@
 	<title />
 	<link rel="self" href="/" />
 	<rights>Copyright © 2022</rights>
-	<updated>2022-07-27T20:51:28Z</updated>
+	<updated>2022-07-30T20:44:53Z</updated>
 	<entry>
 		<id>/posts/replacing-releases-with-multistage-pipelines</id>
 		<title>Azure DevOps: Replacing Releases with a Multi-Stage pipeline</title>
