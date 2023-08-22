@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 	<id>/</id>
-	<title />
+	<title>Alex Bance</title>
 	<link rel="self" href="/" />
-	<rights>Copyright © 2022</rights>
-	<updated>2022-07-30T21:39:54Z</updated>
+	<rights>Copyright © 2023</rights>
+	<updated>2023-08-22T16:47:54Z</updated>
 	<entry>
 		<id>/posts/replacing-releases-with-multistage-pipelines</id>
 		<title>Azure DevOps: Replacing Releases with a Multi-Stage pipeline</title>

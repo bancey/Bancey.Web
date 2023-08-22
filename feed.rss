@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <rss xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0">
 	<channel>
-		<title />
+		<title>Alex Bance</title>
 		<link>/</link>
 		<description />
-		<copyright>Copyright © 2022</copyright>
-		<pubDate>Sat, 30 Jul 2022 21:39:54 GMT</pubDate>
-		<lastBuildDate>Sat, 30 Jul 2022 21:39:54 GMT</lastBuildDate>
+		<copyright>Copyright © 2023</copyright>
+		<pubDate>Tue, 22 Aug 2023 16:47:54 GMT</pubDate>
+		<lastBuildDate>Tue, 22 Aug 2023 16:47:54 GMT</lastBuildDate>
 		<item>
 			<title>Azure DevOps: Replacing Releases with a Multi-Stage pipeline</title>
 			<link>/posts/replacing-releases-with-multistage-pipelines</link>
