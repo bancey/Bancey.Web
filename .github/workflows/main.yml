@@ -13,8 +13,7 @@ jobs:
         submodules: recursive
     - uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '6.0.302'
+        dotnet-version: '7.0.400'
     - run: dotnet run -- deploy
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        MIX_PANEL_PROJECT_ID: ${{ secrets.MIX_PANEL_PROJECT_ID }}
