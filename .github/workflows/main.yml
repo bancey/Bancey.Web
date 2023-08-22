@@ -17,3 +17,4 @@ jobs:
     - run: dotnet run -- deploy
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        MIX_PANEL_PROJECT_ID: ${{ secrets.MIX_PANEL_PROJECT_ID }}
