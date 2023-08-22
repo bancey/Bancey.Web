@@ -4,7 +4,7 @@
 	<title>Alex Bance</title>
 	<link rel="self" href="/" />
 	<rights>Copyright © 2023</rights>
-	<updated>2023-08-22T16:47:54Z</updated>
+	<updated>2023-08-22T19:47:37Z</updated>
 	<entry>
 		<id>/posts/replacing-releases-with-multistage-pipelines</id>
 		<title>Azure DevOps: Replacing Releases with a Multi-Stage pipeline</title>
